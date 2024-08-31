@@ -17,18 +17,21 @@ public class App
 {
     public static void main( String[] args )
     {
+        Shop shop = new Shop();
+        shop.run();
         // new Basics().run();
         // new Shop().run();
         // new IocDemo( new Md5HashService() ).run();
-        Guice
-            .createInjector(                   // Configuration
-                    new ServicesModule(),      // Модулів може бути декілька,
-                    new DbModule()             // розділяють за задачами
-            )
-            // .getInstance( IocDemo.class )             // Resolve
-            // .getInstance( DbDemo.class )
-            .getInstance( FileDemo.class )
-            .run();
+        //////////////////////////////////////
+//        Guice
+//            .createInjector(                   // Configuration
+//                    new ServicesModule(),      // Модулів може бути декілька,
+//                    new DbModule()             // розділяють за задачами
+//            )
+//            // .getInstance( IocDemo.class )             // Resolve
+//            // .getInstance( DbDemo.class )
+//            .getInstance( FileDemo.class )
+//            .run();
     }
 }
 

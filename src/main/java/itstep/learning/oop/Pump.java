@@ -2,6 +2,7 @@ package itstep.learning.oop;
 
 import java.util.Locale;
 
+@Warranty(warrantyPeriod = 12)
 public class Pump
         extends Product
         implements Manual {
@@ -15,10 +16,12 @@ public class Pump
 
     @Override
     public String getCard() {
+        Warranty w = this.getClass().getAnnotation(Warranty.class);
+
         return String.format(
                 Locale.ROOT,
-                "Pump: '%s', Productivity: %d l/h",
-                super.getManufacturer(), this.getProductivity()
+                "Pump: '%s', Productivity: %d l/h, %s",
+                super.getManufacturer(), this.getProductivity(), w.warrantyPeriod() == 0 ? "No warranty" : "Warranty period: " + w.warrantyPeriod() + " months"
         );
     }
 

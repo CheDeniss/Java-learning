@@ -12,16 +12,17 @@ public class Shop {
         products = new ArrayList<Product>();
         products.add( new Lamp("Philips", 60.0) ) ;
         products.add( new Pump("Pumper", 100) ) ;
+        products.add( new Accumulator("Varta", 80) );
     }
 
     public void run() {
         printProducts();
-        System.out.println("-----------------MANUAL----------------------");
-        printManualProducts();
-        System.out.println("-----------------NON-MANUAL----------------------");
-        printNonManualProducts();
-        System.out.println("-----------------WORKS----------------------");
-        showWorks();
+//        System.out.println("-----------------MANUAL----------------------");
+//        printManualProducts();
+//        System.out.println("-----------------NON-MANUAL----------------------");
+//        printNonManualProducts();
+//        System.out.println("-----------------WORKS----------------------");
+//        showWorks();
     }
 
     private void printManualProducts() {

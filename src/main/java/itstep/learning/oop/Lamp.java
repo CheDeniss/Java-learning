@@ -2,9 +2,11 @@ package itstep.learning.oop;
 
 import java.util.Locale;
 
+@Warranty
 public class Lamp
         extends Product
-        implements Testable {
+        implements Testable
+         {
 
     private double power;
 
@@ -15,10 +17,12 @@ public class Lamp
 
     @Override
     public String getCard() {
+        Warranty w = this.getClass().getAnnotation(Warranty.class);
+
         return String.format(
                 Locale.ROOT,
-                "Lamp: '%s', Power: %.1f W",
-                super.getManufacturer(), this.getPower()
+                "Lamp: '%s', Power: %.1f W, %s",
+                super.getManufacturer(), this.getPower(), w.warrantyPeriod() == 0 ? "No warranty" : "Warranty period: " + w.warrantyPeriod() + " months"
         );
     }
 
