@@ -1,6 +1,7 @@
 package itstep.learning;
 
 import com.google.inject.Guice;
+import itstep.learning.Async.AsyncDemo;
 import itstep.learning.db.DbDemo;
 import itstep.learning.fs.FileDemo;
 import itstep.learning.ioc.DbModule;
@@ -17,8 +18,12 @@ public class App
 {
     public static void main( String[] args )
     {
-        Shop shop = new Shop();
-        shop.run();
+        //Shop shop = new Shop();
+        //shop.run();
+
+
+        AsyncDemo asyncDemo = new AsyncDemo();
+        asyncDemo.threadDemo();
         // new Basics().run();
         // new Shop().run();
         // new IocDemo( new Md5HashService() ).run();
