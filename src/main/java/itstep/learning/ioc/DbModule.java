@@ -22,9 +22,9 @@ public class DbModule extends AbstractModule {
                 mysqlDriver = new com.mysql.cj.jdbc.Driver();  // створюємо об'єкт драйвера СУБД
                 DriverManager.registerDriver( mysqlDriver );  // реєструємо його
                 connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3308/java_pv222" +
+                        "jdbc:mysql://localhost:3308/start_date_time" +
                                 "?useUnicode=true&characterEncoding=utf8",
-                        "user222", "pass222"
+                        "user_dch", "pass987"
                 );   // на відміну від ADO підключення відкривається при створенні
             }
             catch( SQLException ex ) {

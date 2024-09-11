@@ -10,7 +10,7 @@ public class DbDemo {
 
     public void run() {
         System.out.println("DB Demo");
-        try {
+       try {
             Statement statement = connection.createStatement();
             ResultSet res = statement.executeQuery( "SHOW DATABASES" ) ;
             while ( res.next() ) {
