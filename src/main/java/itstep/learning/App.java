@@ -22,21 +22,26 @@ public class App
         //shop.run();
 
 
-        AsyncDemo asyncDemo = new AsyncDemo();
-        asyncDemo.threadDemo();
+// Асинхронна робота
+//        AsyncDemo asyncDemo = new AsyncDemo();
+//        asyncDemo.threadDemo();
+
+
         // new Basics().run();
         // new Shop().run();
         // new IocDemo( new Md5HashService() ).run();
         //////////////////////////////////////
-//        Guice
-//            .createInjector(                   // Configuration
-//                    new ServicesModule(),      // Модулів може бути декілька,
-//                    new DbModule()             // розділяють за задачами
-//            )
-//            // .getInstance( IocDemo.class )             // Resolve
-//            // .getInstance( DbDemo.class )
-//            .getInstance( FileDemo.class )
-//            .run();
+
+
+        Guice
+            .createInjector(                   // Configuration
+                    new ServicesModule(),      // Модулів може бути декілька,
+                    new DbModule()             // розділяють за задачами
+            )
+                .getInstance( IocDemo.class )             // Resolve
+            //.getInstance( DbDemo.class )
+            //.getInstance( FileDemo.class )
+            .run();
     }
 }
 
