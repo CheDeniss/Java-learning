@@ -8,7 +8,21 @@ import java.util.HashMap;
 
 public class FileDemo {
 
-    public void run() {
+    public void run(){
+        //createDbIni(
+//                "mysql",
+//                "localhost",
+//                3308,
+//                "start_date_time",
+//                "user_dch",
+//                "pass987",
+//                true,
+//                "UTF-8"
+//        );
+
+        getIniData();
+    }
+    public void run1() {
         // Ресурси - файли, що автоматично переносяться у target/classes
         // і доступні при запуску через ClassLoader але ClassLoader-и різні для різних збірок
         try( InputStream rs =                // Як гарантовано дістатись даної збірки?
@@ -38,6 +52,65 @@ public class FileDemo {
             System.err.println( ex.getMessage() );
         }
     }
+
+    public void createDbIni(String dbms,
+                            String host,
+                            int port,
+                            String schema,
+                            String user,
+                            String password,
+                            boolean useUnicode,
+                            String characterEncoding) {
+        try (OutputStream os = new FileOutputStream("db1.ini")) {
+            // Створюємо рядки для кожного параметра і записуємо їх у файл
+            os.write(("dbms=" + dbms + "\n").getBytes());
+            os.write(("host=" + host + "\n").getBytes());
+            os.write(("port=" + port + "\n").getBytes());
+            os.write(("schema=" + schema + "\n").getBytes());
+            os.write(("user=" + user + "\n").getBytes());
+            os.write(("password=" + password + "\n").getBytes());
+            os.write(("useUnicode=" + useUnicode + "\n").getBytes());
+            os.write(("characterEncoding=" + characterEncoding + "\n").getBytes());
+
+            System.out.println("=> File was created.");
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+
+    public String getIniData() {
+        try( InputStream rs = this.getClass().getClassLoader().getResourceAsStream("db.ini")
+        ) {
+            String content = readStream( rs );
+            Map<String, String> ini = new HashMap<>();
+
+            String[] lines = content.split("\n");
+            for(String line : lines) {
+                String[] parts = line.split("=");
+                ini.put( parts[0].trim(), parts[1].trim() );
+            }
+            String out = String.format(
+                    "jdbc:%s://%s:%s/%s?useUnicode=%s&characterEncoding=%s&user=%s&password=%s",
+                    ini.get("dbms"),
+                    ini.get("host"),
+                    ini.get("port"),
+                    ini.get("schema"),
+                    ini.get("useUnicode"),
+                    ini.get("characterEncoding"),
+                    ini.get("user"),
+                    ini.get("password")
+            );
+
+            System.out.println(out);
+            return out;
+
+        }
+        catch (IOException ex) {
+            System.err.println( ex.getMessage() );
+            return null;
+        }
+    }
+
 
     public void runFile() {
         System.out.println("File System");
@@ -80,7 +153,7 @@ public class FileDemo {
         }
     }
 
-    private String readStream(InputStream in) throws IOException {
+    public String readStream(InputStream in) throws IOException {
         return readStream( in, StandardCharsets.UTF_8 );
     }
 }

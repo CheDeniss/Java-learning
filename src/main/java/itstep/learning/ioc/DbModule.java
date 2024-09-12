@@ -2,16 +2,22 @@ package itstep.learning.ioc;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import itstep.learning.fs.FileDemo;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DbModule extends AbstractModule {
 
     private Connection connection = null;
     private Driver mysqlDriver = null;
+    private FileDemo fileDemo = new FileDemo();
 
     @Provides  // методи-провайдери -- керована інжекція
     private Connection getConnection() {
@@ -21,11 +27,12 @@ public class DbModule extends AbstractModule {
             try {
                 mysqlDriver = new com.mysql.cj.jdbc.Driver();  // створюємо об'єкт драйвера СУБД
                 DriverManager.registerDriver( mysqlDriver );  // реєструємо його
-                connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3308/start_date_time" +
-                                "?useUnicode=true&characterEncoding=utf8",
-                        "user_dch", "pass987"
-                );   // на відміну від ADO підключення відкривається при створенні
+//                connection = DriverManager.getConnection(
+//                        "jdbc:mysql://localhost:3308/start_date_time" +
+//                                "?useUnicode=true&characterEncoding=utf8",
+//                        "user_dch", "pass987"
+//                );   // на відміну від ADO підключення відкривається при створенні
+                connection = DriverManager.getConnection( fileDemo.getIniData() );
             }
             catch( SQLException ex ) {
                 System.err.println( "DbModule::getConnection " + ex.getMessage() );
@@ -33,6 +40,8 @@ public class DbModule extends AbstractModule {
         }
         return connection;
     }
+
+
 }
 /*
 Д.З. Створити "журнал" запуску застосунку:

@@ -33,29 +33,29 @@ public class App
         // new IocDemo( new Md5HashService() ).run();
         //////////////////////////////////////
 
-//      Guice
-//           .createInjector(                   // Configuration
-//                   new ServicesModule(),      // Модулів може бути декілька,
-//                  new DbModule()             // розділяють за задачами
-//         )
-//              //.getInstance( IocDemo.class )             // Resolve
-//        //.getInstance( DbDemo.class )
-//        //.getInstance( FileDemo.class )
-//              .getInstance( DbStartLogger.class )
-//         .run();
+      Guice
+           .createInjector(                   // Configuration
+                   new ServicesModule(),      // Модулів може бути декілька,
+                  new DbModule()             // розділяють за задачами
+         )
+              //.getInstance( IocDemo.class )             // Resolve
+        .getInstance( DbDemo.class )
+        //.getInstance( FileDemo.class )
+              //.getInstance( DbStartLogger.class )
+         .run();
 
-        com.google.inject.Injector injector = Guice.createInjector(
-                new ServicesModule(),
-                new DbModule()
-        );
-
-        if(args.length > 0 && args[0].equals("--journal")) {
-            injector.getInstance( DbStartLogger.class ).run();
-            injector.getInstance( DbStartLogger.class ).ShowAll();
-        }
-        else {
-            injector.getInstance( DbStartLogger.class ).run();
-        }
+//        com.google.inject.Injector injector = Guice.createInjector(
+//                new ServicesModule(),
+//                new DbModule()
+//        );
+//
+//        if(args.length > 0 && args[0].equals("--journal")) {
+//            injector.getInstance( DbStartLogger.class ).run();
+//            injector.getInstance( DbStartLogger.class ).ShowAll();
+//        }
+//        else {
+//            injector.getInstance( DbStartLogger.class ).run();
+//        }
 
 
     }
