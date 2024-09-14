@@ -5,64 +5,63 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class AsyncDemo{
+public class MultitreadDemo {
     private String pandigital = ""; // Кінцеве число
     private boolean[] isPandigital = new boolean[10]; // Масив для перевірки на унікальність
     private final Object locker = new Object(); // Об'єкт для синхронізації
     private int counter = 10; // Лічильник
 
+    private final ExecutorService pool = Executors.newFixedThreadPool(3); // Пул потоків
 
-    private class PandigitalRunnable implements Runnable{
+    private class PandigitalRunnable implements Runnable {
         @Override
         public void run() {
             int localCounter; // Локальний лічильник
             int numToAdd = numPlus(); // Число для додавання
 
-            synchronized (locker){
+            synchronized (locker) {
                 pandigital += numToAdd;
                 localCounter = --counter;
             }
             System.out.println("Current number: " + pandigital); // Вивід поточного числа
 
-            if (localCounter == 0){
+            if (localCounter == 0) {
                 System.out.println("===> Final pandigital number: " + pandigital); // Вивід кінцевого числа
+                pool.shutdown(); // Завершення роботи пулу потоків
             }
         }
     }
 
-    public void threadDemo(){
-        for (int i = 0; i < 10; i++){
-            Thread thread = new Thread(new PandigitalRunnable());
-            thread.start();
+    public void runMultithreaded() {
+        for (int i = 0; i < 10; i++) {
+            pool.submit(new PandigitalRunnable()); // Використовуємо пул потоків для запуску задач
+        }
+
+        try {
+            pool.awaitTermination(1, TimeUnit.MINUTES); // Очікуємо завершення всіх задач
+        } catch (InterruptedException e) {
+            System.err.println("Task interrupted: " + e.getMessage());
         }
     }
 
     private int numPlus() {
         Random random = new Random();
 
-        try{
+        try {
             TimeUnit.MILLISECONDS.sleep(300); // Затримка
-        }
-        catch (InterruptedException ignore){
+        } catch (InterruptedException ignore) {
         }
 
-        while (true)
-        {
+        while (true) {
             int num = random.nextInt(10);
 
-            //System.out.println("=========================="); // Вивід для перевірки
-            //System.out.println(Arrays.toString(isPandigital)); // Вивід для перевірки
-            //System.out.println("Suggested num: " + num); // Вивід для перевірки
-
-            if(!isPandigital[num])
-            {
-                isPandigital[num] = true;
-
-                //System.out.println("OK"); // Вивід для перевірки
-                //System.out.println("=========================="); // Вивід для перевірки
-
-                return num;
+            synchronized (locker) {
+                if (!isPandigital[num]) {
+                    isPandigital[num] = true;
+                    return num;
+                }
             }
         }
     }
 }
+

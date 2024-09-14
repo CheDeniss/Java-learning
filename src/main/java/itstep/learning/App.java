@@ -2,6 +2,7 @@ package itstep.learning;
 
 import com.google.inject.Guice;
 import itstep.learning.Async.AsyncDemo;
+import itstep.learning.Async.MultitreadDemo;
 import itstep.learning.db.DbDemo;
 import itstep.learning.db.DbStartLogger;
 import itstep.learning.fs.FileDemo;
@@ -27,22 +28,25 @@ public class App
 //        AsyncDemo asyncDemo = new AsyncDemo();
 //        asyncDemo.threadDemo();
 
+        MultitreadDemo multitreadDemo = new MultitreadDemo();
+        multitreadDemo.runMultithreaded();
+
 
         // new Basics().run();
         // new Shop().run();
         // new IocDemo( new Md5HashService() ).run();
         //////////////////////////////////////
 
-      Guice
-           .createInjector(                   // Configuration
-                   new ServicesModule(),      // Модулів може бути декілька,
-                  new DbModule()             // розділяють за задачами
-         )
-              //.getInstance( IocDemo.class )             // Resolve
-        .getInstance( DbDemo.class )
-        //.getInstance( FileDemo.class )
-              //.getInstance( DbStartLogger.class )
-         .run();
+//      Guice
+//           .createInjector(                   // Configuration
+//                   new ServicesModule(),      // Модулів може бути декілька,
+//                  new DbModule()             // розділяють за задачами
+//         )
+//              //.getInstance( IocDemo.class )             // Resolve
+//        .getInstance( DbDemo.class )
+//        //.getInstance( FileDemo.class )
+//              //.getInstance( DbStartLogger.class )
+//         .run();
 
 //        com.google.inject.Injector injector = Guice.createInjector(
 //                new ServicesModule(),
